@@ -55,7 +55,7 @@ passport.deserializeUser((obj: Express.User, done) => {
 });
 
 export const sessionMiddleware = session({
-  secret: process.env.AUTH_SECRET || "your-fallback-secret",
+  secret: process.env.SESSION_SECRET || "your-fallback-secret",
   resave: false,
   saveUninitialized: false,
   cookie: { secure: process.env.NODE_ENV === "production" },
