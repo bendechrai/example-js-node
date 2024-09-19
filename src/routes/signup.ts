@@ -113,7 +113,7 @@ router.post("/test", async (req: Request, res: Response) => {
   return res.json({ ok: true });
 });
 
-router.get("/", async (req: Request, res: Response) => {
+router.get("/", (req: Request, res: Response) => {
   const user = req.session.user;
   const siteKey = process.env.ARCJET_KEY ? true : undefined;
 
@@ -125,4 +125,4 @@ router.get("/", async (req: Request, res: Response) => {
   });
 });
 
-export = router;
+export default router;
