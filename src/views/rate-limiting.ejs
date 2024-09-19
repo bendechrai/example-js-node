@@ -1,114 +1,142 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-    <meta name="description" content="<%= description %>" />
-  </head>
-  <body>
-    <h1>Arcjet rate limiting example</h1>
-    <p>
+<section class="Content container mx-auto px-4 py-8">
+  <div class="mb-8">
+    <h1
+      class="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl mb-4"
+    >
+      Arcjet rate limiting example
+    </h1>
+    <p class="max-w-[700px] text-lg">
       This page is protected by
-      <a href="https://docs.arcjet.com/rate-limiting/concepts">
+      <a
+        href="https://docs.arcjet.com/bot-protection/concepts"
+        class="font-bold hover:underline decoration-1 underline-offset-2"
+      >
         Arcjet's rate limiting </a
       >.
     </p>
+  </div>
 
-    <h2>Try it</h2>
-    <form id="rlForm">
-      <button type="submit">Push me</button>
+  <div class="border-t border-border my-8"></div>
+
+  <div class="mb-8">
+    <h2 class="text-xl font-bold mb-4">Try it</h2>
+    <form id="rlForm" class="mb-4">
+      <button
+        type="submit"
+        class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4"
+      >
+        Push me
+      </button>
     </form>
 
-    <pre id="api_response"></pre>
+    <div id="result" class="mb-4"></div>
 
     <% if (user) { %>
-    <p className="text-green-500">
-      You are authenticated as <%= user.email %>
-      <span className="text-secondary-foreground">
-        – the limit is set to 5 requests every 60 seconds.</span
-      >
-    </p>
+      <p class="text-green-500">
+          You are authenticated as <%= user.email %>
+          <span class="text-secondary-foreground">
+              – the limit is set to 5 requests every 60 seconds.
+          </span>
+      </p>
     <% } else { %>
-    <p class="text-red-400">
-      You are not authenticated
-      <span class="text-secondary-foreground">
-        – the limit is set to 2 requests every 60 seconds.</span
-      >
-    </p>
+      <p class="text-red-400">
+          You are not authenticated
+          <span class="text-secondary-foreground">
+              – the limit is set to 2 requests every 60 seconds.
+          </span>
+      </p>
     <% } %>
 
-    <% if (siteKey) { %>
-      <p><a href="https://app.arcjet.com">Visit Dashboard</a></p>
-    <% } %>
-
-    <p>
+    <p class="max-w-[700px] text-secondary-foreground mt-4">
       Rate limits can be
-      <a href="https://docs.arcjet.com/reference/nodejs#ad-hoc-rules">
+      <a
+        href="https://docs.arcjet.com/reference/nextjs#ad-hoc-rules"
+        class="font-bold hover:underline decoration-1 underline-offset-2"
+      >
         dynamically adjusted
       </a>
       e.g. to set a limit based on the authenticated user.
     </p>
 
     <% if (user) { %>
-      <form action="/auth/signout" method="post">
-        <button type="submit">Sign out</button>
+      <form action="/auth/signout" method="post" class="mt-4">
+        <button
+          type="submit"
+          class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 py-2 px-4"
+        >
+          Sign Out
+        </button>
       </form>
-    <% } else { %>
-      <form action="/auth/login" method="post">
-        <button type="submit">Sign in with GitHub to see a different rate limit</button>
+      <% } else { %>
+      <form action="/auth/signin" method="post" class="mt-4">
+        <button
+          type="submit"
+          class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 py-2 px-4"
+        >
+          Sign In
+        </button>
       </form>
-      <% } %>
-      
-    <h2>See the code</h2>
-    <p>
+    <% } %>
+        
+    <% if (siteKey) { %>
+      <p class="mt-4">
+          <a href="https://app.arcjet.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 py-2 px-4">
+              Visit Arcjet Dashboard
+          </a>
+      </p>
+    <% } %>
+    
+</div>
+
+  <div class="border-t border-border my-8"></div>
+
+  <div class="mb-8">
+    <h2 class="text-xl font-bold mb-4">See the code</h2>
+    <p class="text-secondary-foreground">
       The
       <a
-        href="https://github.com/arcjet/arcjet-node-express-example/blob/main/src/routes/rate-limiting.ts"
+        href="https://github.com/arcjet/arcjet-js-example/blob/main/app/rate-limiting/test/route.ts"
         target="_blank"
         rel="noreferrer"
+        class="font-bold hover:underline decoration-1 underline-offset-2"
       >
         API route
       </a>
       imports a
       <a
-        href="https://github.com/arcjet/arcjet-node-express-example/blob/main/src/lib/arcjet.ts"
+        href="https://github.com/arcjet/arcjet-js-example/blob/main/lib/arcjet.ts"
         target="_blank"
         rel="noreferrer"
+        class="font-bold hover:underline decoration-1 underline-offset-2"
       >
         centralized Arcjet client
       </a>
       which sets base rules.
     </p>
+  </div>
 
-    <script>
-      document
-        .getElementById("rlForm")
-        .addEventListener("submit", async (e) => {
-          e.preventDefault();
-          try {
-            const response = await fetch("/rate-limiting/test", {
-              method: "POST",
-            });
-            const data = await response.json();
+  <div class="border-t border-border my-8"></div>
 
-            // if the page loads, we get
-            // {
-            //   "message": "HTTP 200: OK. 1 requests remaining. Reset in 59 seconds."
-            // }
-            // if the rate limit hits, we get
-            // {
-            //   "error": "HTTP 429: Too many requests. Reset in 22 seconds.",
-            //   "ip": {}
-            // }
-            // write the data.message or the date.error to api_response
-            document.getElementById("api_response").innerText =
-              data.message || data.error;
-          } catch (error) {
-            console.error("Error:", error);
-            document.getElementById("api_response").innerText = error.message;
-          }
-        });
-    </script>
-  </body>
-</html>
+  <%- include('partials/what-next', { deployed: siteKey != null }) %>
+
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("rlForm");
+    const result = document.getElementById("result");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      try {
+        const response = await fetch("/rate-limiting/test", { method: "POST" });
+        const data = await response.json();
+        result.textContent = data.message || data.error;
+        result.className = response.ok ? "text-green-500" : "text-red-500";
+      } catch (error) {
+        result.textContent = "An error occurred";
+        result.className = "text-red-500";
+      }
+    });
+  });
+</script>

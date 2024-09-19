@@ -1,0 +1,55 @@
+<div class="grid items-center gap-6">
+  <h2 class="text-xl font-bold">What next?</h2>
+  <div class="flex flex-col gap-8">
+    <% if (deployed) { %>
+    <div class="flex gap-6 items-center">
+      <a
+        target="_blank"
+        class="inline-flex items-center justify-center rounded-full text-md font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-accent hover:text-accent-foreground h-9 py-1 px-5"
+        href="https://github.com/arcjet/arcjet-js/tree/main/examples"
+        >See all example apps</a
+      ><a
+        target="_blank"
+        class="hover:underline font-bold decoration-1 underline-offset-2"
+        href="https://docs.arcjet.com"
+        >Arcjet docs</a
+      >
+    </div>
+    <div class="flex gap-3">
+      <span class="text-secondary-foreground">Get in touch</span
+      ><a
+        target="_blank"
+        class="hover:underline font-bold decoration-1 underline-offset-2"
+        href="https://discord.gg/TPra6jqZDC"
+        rel="noreferrer"
+        >Join our Discord</a
+      >
+    </div>
+    <% } else { %>
+    <div>
+      <a
+        target="_blank"
+        class="inline-flex items-center justify-center rounded-full text-md font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-accent hover:text-accent-foreground h-9 py-1 px-5"
+        href="https://app.arcjet.com"
+        >Sign up for Arcjet</a
+      >
+    </div>
+    <div class="flex gap-3">
+      <span class="text-secondary-foreground">Want to know more?</span
+      ><a
+        target="_blank"
+        class="hover:underline font-bold decoration-1 underline-offset-2"
+        href="https://docs.arcjet.com"
+        >Arcjet docs</a
+      ><span class="text-muted-foreground">/</span
+      ><a
+        target="_blank"
+        rel="noreferrer"
+        class="hover:underline font-bold decoration-1 underline-offset-2"
+        href="https://discord.gg/TPra6jqZDC"
+        >Join our Discord</a
+      >
+    </div>
+    <% } %>
+  </div>
+</div>

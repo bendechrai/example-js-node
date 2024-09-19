@@ -32,7 +32,7 @@ passport.use(
       accessToken: string,
       refreshToken: string,
       profile: any,
-      done: (error: any, user?: Express.User) => void
+      done: (error: any, user?: Express.User) => void,
     ) {
       const user: Express.User = {
         id: profile.id,
@@ -42,8 +42,8 @@ passport.use(
             : undefined,
       };
       done(null, user);
-    }
-  )
+    },
+  ),
 );
 
 passport.serializeUser((user, done) => {
@@ -68,7 +68,7 @@ export async function auth(req: Request): Promise<Express.User | null> {
 export function ensureAuthenticated(
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   if (req.session.user) {
     return next();
@@ -78,8 +78,8 @@ export function ensureAuthenticated(
 
 export function addAuthRoutes(app: express.Application) {
   app.post(
-    "/auth/login",
-    passport.authenticate("github", { scope: ["user:email"] })
+    "/auth/signin",
+    passport.authenticate("github", { scope: ["user:email"] }),
   );
 
   app.get(
@@ -90,7 +90,7 @@ export function addAuthRoutes(app: express.Application) {
         req.session.user = req.user;
       }
       res.redirect("/rate-limiting");
-    }
+    },
   );
 
   app.post("/auth/signout", (req: Request, res: Response) => {

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" class="<%= locals.theme || 'light' %>">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %> - Arcjet example app</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link href="/styles/tailwind.css" rel="stylesheet">
+    <script>
+      // Simple dark mode toggle
+      function toggleTheme() {
+        const html = document.documentElement;
+        const currentTheme = html.classList.contains("dark") ? "dark" : "light";
+        const newTheme = currentTheme === "dark" ? "light" : "dark";
+        html.classList.remove(currentTheme);
+        html.classList.add(newTheme);
+        localStorage.setItem("theme", newTheme);
+      }
+
+      // Set initial theme
+      document.addEventListener("DOMContentLoaded", () => {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        document.documentElement.classList.add(savedTheme);
+      });
+    </script>
+  </head>
+  <body class="min-h-screen bg-background font-sans antialiased">
+    <div class="relative flex min-h-screen flex-col">
+      <%- include('partials/header') %>
+      <div class="flex-1"><%- body %></div>
+    </div>
+    <script>
+      // Initialize theme toggle button
+      document.addEventListener("DOMContentLoaded", () => {
+        const themeToggle = document.getElementById("theme-toggle");
+        if (themeToggle) {
+          themeToggle.addEventListener("click", toggleTheme);
+        }
+      });
+    </script>
+  </body>
+</html>
