@@ -3,6 +3,7 @@ import path from "path";
 import passport from "passport";
 import expressEjsLayouts from "express-ejs-layouts";
 import { sessionMiddleware, addAuthRoutes } from "./lib/auth";
+import signupProtectionRouter from "./routes/signup";
 import botProtectionRouter from "./routes/bots";
 import rateLimitingRouter from "./routes/rate-limiting";
 import attackProtectionRouter from "./routes/attack";
@@ -46,12 +47,13 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/signup", (req, res) => {
-  res.render("signup", {
-    title: "Signup form protection",
+app.get("/welcome", (req, res) => {
+  res.render("welcome", {
+    title: "Arcjet Signup Welcome Page",
   });
 });
 
+app.use("/signup", signupProtectionRouter);
 app.use("/bots", botProtectionRouter);
 app.use("/rate-limiting", rateLimitingRouter);
 app.use("/attack", attackProtectionRouter);

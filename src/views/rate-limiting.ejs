@@ -75,7 +75,6 @@
       </button>
     </form>
     <% } %>
-
   </div>
 
   <div class="Divider border-t border-border"></div>
@@ -117,14 +116,18 @@
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       try {
+        // Send a POST request to the /rate-limiting/test endpoint
         const response = await fetch("/rate-limiting/test", { method: "POST" });
         const data = await response.json();
         const message = data.message || data.error;
-        // create <pre id="result">message</pre> and append it to the end of the form
+
+        // Create a <pre id="result">message</pre> element
         const result = document.createElement("pre");
         result.id = "result";
         result.textContent = message;
-        // if there's a <pre id="result">message</pre> element, replace it with the new one, else append it
+
+        // If there's a <pre id="result">message</pre> element in the DOM already,
+        // replace it with the new one, else append it to the form
         const existingResult = document.getElementById("result");
         if (existingResult) {
           existingResult.replaceWith(result);

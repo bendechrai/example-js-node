@@ -1,13 +1,195 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
-</head>
-<body>
-    <h1><%= title %></h1>
-    <p>This is a placeholder for the <%= title %> page.</p>
-    <a href="/">Back to Home</a>
-</body>
-</html>
+<section class="Content container mx-auto px-4 py-8">
+  <div class="Section">
+    <h1
+      class="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl"
+    >
+      Arcjet signup form protection
+    </h1>
+    <p class="max-w-[700px] text-lg">
+      This form uses
+      <a
+        class="hover:underline font-bold decoration-1 underline-offset-2"
+        href="https://docs.arcjet.com/signup-protection/concepts"
+        >Arcjet's signup form protection</a
+      >
+      which includes:
+    </p>
+    <ul
+      class="ms-8 max-w-[700px] list-outside list-disc text-secondary-foreground"
+    >
+      <li class="text-lg">
+        Arcjet server-side email verification configured to block disposable
+        providers and ensure that the domain has a valid MX record.
+      </li>
+      <li class="text-lg pt-4">
+        Rate limiting set to 5 requests over a 2 minute sliding window - a
+        reasonable limit for a signup form, but easily configurable.
+      </li>
+      <li class="text-lg pt-4">
+        Bot protection to stop automated clients from submitting the form.
+      </li>
+    </ul>
+  </div>
+  <div class="Divider border-t border-border"></div>
+
+  <div class="Section">
+    <h2 class="text-xl font-bold">Try it</h2>
+    <div class="flex gap-4">
+      <form id="suForm" class="space-y-8">
+        <div class="space-y-2">
+          <label
+            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            for=":r0:-form-item"
+            >Email</label
+          ><input
+            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            id="email"
+            type="email"
+            value="nonexistent@arcjet.ai"
+            name="email"
+          />
+          <p
+            id=":r0:-form-item-description"
+            class="text-sm text-muted-foreground"
+          >
+            Just a test form - you won't receive any emails.
+          </p>
+        </div>
+        <button
+          class="inline-flex items-center justify-center rounded-full text-md font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-9 py-1 px-5"
+          type="submit"
+        >
+          Sign up
+        </button>
+      </form>
+    </div>
+    <h2 class="text-xl font-bold">Test emails</h2>
+    <p class="text-secondary-foreground">
+      Try these emails to see how it works:
+    </p>
+    <ul class="ms-8 list-outside list-disc">
+      <li class="text-muted-foreground">
+        <code class="text-secondary-foreground"
+          >invalid.@arcjet<span class="copy-to-clipboard ml-4"></code>
+        –&nbsp;is an invalid email address.
+      </li>
+      <li class="text-muted-foreground pt-2">
+        <code class="text-secondary-foreground"
+          >test@0zc7eznv3rsiswlohu.tk<span class="copy-to-clipboard ml-4"></code>
+        –&nbsp;is from a disposable email provider.
+      </li>
+      <li class="text-muted-foreground pt-2">
+        <code class="text-secondary-foreground"
+          >nonexistent@arcjet.ai<span class="copy-to-clipboard ml-4"></span
+        ></code>
+        –&nbsp;is a valid email address &amp; domain, but has no MX records.
+      </li>
+    </ul>
+  </div>
+  <div class="Divider border-t border-border"></div>
+
+  <div class="Section">
+    <h2 class="text-xl font-bold">See the code</h2>
+    <p class="text-secondary-foreground">
+      The
+      <a
+        href="https://github.com/arcjet/example-js-node/blob/main/src/routes/signup.ts"
+        target="_blank"
+        rel="noreferrer"
+        class="font-bold hover:underline decoration-1 underline-offset-2"
+      >
+        API route
+      </a>
+      imports a
+      <a
+        href="https://github.com/arcjet/example-js-node/blob/main/src/lib/arcjet.ts"
+        target="_blank"
+        rel="noreferrer"
+        class="font-bold hover:underline decoration-1 underline-offset-2"
+      >
+        centralized Arcjet client
+      </a>
+      which sets base rules.
+    </p>
+  </div>
+
+  <div class="Divider border-t border-border"></div>
+
+  <%- include('partials/what-next', { deployed: siteKey != null }) %>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("suForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      try {
+        // Send a POST request to the /signup/test endpoint
+        const response = await fetch("/signup/test", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: document.getElementById("email").value,
+          }),
+        });
+        const data = await response.json();
+
+        if(data.ok) {
+            // redirect to /welcome
+            window.location.href = "/welcome";
+            return;
+        }
+
+        const message = data.message;
+
+        // Create a <p id="result">message</p> element
+        const result = document.createElement("p");
+        result.id = "result";
+        result.textContent = `We couldn't sign you up: ${data.message}`;
+        result.className = "text-sm font-medium text-destructive";
+
+        // If there's a <pre id="result">message</pre> element in the DOM already,
+        // replace it with the new one, else append it to the form
+        const existingResult = document.getElementById("result");
+        if (existingResult) {
+          existingResult.replaceWith(result);
+        } else {
+          // find first div in the form and append result to it
+          const formDiv = form.querySelector("div");
+          formDiv.appendChild(result);
+        }
+      } catch (error) {
+        result.textContent = "An error occurred";
+      }
+    });
+  });
+
+  // SVGs
+  const tickSvg =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1 inline-block"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+  const copySvg =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1 inline-block"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>';
+
+  // Find all .copy-to-clipboard elements and add a click event listener to each
+  const copyToClipboardElements =
+    document.querySelectorAll(".copy-to-clipboard");
+  copyToClipboardElements.forEach((element) => {
+    element.addEventListener("click", () => {
+      copyToClipboard(element);
+    });
+    element.innerHTML = copySvg;
+  });
+
+  // Function to copy text to clipboard
+  function copyToClipboard(element) {
+    const text = element.parentElement.textContent;
+    navigator.clipboard.writeText(text);
+    element.innerHTML = tickSvg;
+    setTimeout(() => {
+      element.innerHTML = copySvg;
+    }, 2000);
+  }
+</script>
