@@ -1,7 +1,7 @@
 <section class="Content container mx-auto px-4 py-8">
-  <div class="mb-8">
+  <div class="Section">
     <h1
-      class="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl mb-4"
+      class="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl"
     >
       Arcjet rate limiting example
     </h1>
@@ -16,38 +16,36 @@
     </p>
   </div>
 
-  <div class="border-t border-border my-8"></div>
+  <div class="Divider border-t border-border"></div>
 
-  <div class="mb-8">
-    <h2 class="text-xl font-bold mb-4">Try it</h2>
-    <form id="rlForm" class="mb-4">
+  <div class="Section">
+    <h2 class="text-xl font-bold">Try it</h2>
+    <form id="rlForm" class="space-y-8">
       <button
         type="submit"
-        class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4"
+        class="inline-flex items-center justify-center rounded-full text-md font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-9 py-1 px-5"
       >
         Push me
       </button>
     </form>
 
-    <div id="result" class="mb-4"></div>
-
     <% if (user) { %>
-      <p class="text-green-500">
-          You are authenticated as <%= user.email %>
-          <span class="text-secondary-foreground">
-              – the limit is set to 5 requests every 60 seconds.
-          </span>
-      </p>
+    <p class="text-green-500">
+      You are authenticated as <%= user.email %>
+      <span class="text-secondary-foreground">
+        – the limit is set to 5 requests every 60 seconds.
+      </span>
+    </p>
     <% } else { %>
-      <p class="text-red-400">
-          You are not authenticated
-          <span class="text-secondary-foreground">
-              – the limit is set to 2 requests every 60 seconds.
-          </span>
-      </p>
+    <p class="text-red-400">
+      You are not authenticated
+      <span class="text-secondary-foreground">
+        – the limit is set to 2 requests every 60 seconds.
+      </span>
+    </p>
     <% } %>
 
-    <p class="max-w-[700px] text-secondary-foreground mt-4">
+    <p class="max-w-[700px] text-secondary-foreground">
       Rate limits can be
       <a
         href="https://docs.arcjet.com/reference/nextjs#ad-hoc-rules"
@@ -59,39 +57,31 @@
     </p>
 
     <% if (user) { %>
-      <form action="/auth/signout" method="post" class="mt-4">
-        <button
-          type="submit"
-          class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 py-2 px-4"
-        >
-          Sign Out
-        </button>
-      </form>
-      <% } else { %>
-      <form action="/auth/signin" method="post" class="mt-4">
-        <button
-          type="submit"
-          class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 py-2 px-4"
-        >
-          Sign In
-        </button>
-      </form>
+    <form action="/auth/signout" method="post">
+      <button
+        type="submit"
+        class="inline-flex items-center justify-center rounded-full text-md font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-accent hover:text-accent-foreground h-9 py-1 px-5"
+      >
+        Sign out
+      </button>
+    </form>
+    <% } else { %>
+    <form action="/auth/signin" method="post">
+      <button
+        type="submit"
+        class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 py-2 px-4"
+      >
+        Sign In
+      </button>
+    </form>
     <% } %>
-        
-    <% if (siteKey) { %>
-      <p class="mt-4">
-          <a href="https://app.arcjet.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 py-2 px-4">
-              Visit Arcjet Dashboard
-          </a>
-      </p>
-    <% } %>
-    
-</div>
 
-  <div class="border-t border-border my-8"></div>
+  </div>
 
-  <div class="mb-8">
-    <h2 class="text-xl font-bold mb-4">See the code</h2>
+  <div class="Divider border-t border-border"></div>
+
+  <div class="Section">
+    <h2 class="text-xl font-bold">See the code</h2>
     <p class="text-secondary-foreground">
       The
       <a
@@ -115,24 +105,32 @@
     </p>
   </div>
 
-  <div class="border-t border-border my-8"></div>
+  <div class="Divider border-t border-border"></div>
 
   <%- include('partials/what-next', { deployed: siteKey != null }) %>
-
 </section>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("rlForm");
-    const result = document.getElementById("result");
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       try {
         const response = await fetch("/rate-limiting/test", { method: "POST" });
         const data = await response.json();
-        result.textContent = data.message || data.error;
-        result.className = response.ok ? "text-green-500" : "text-red-500";
+        const message = data.message || data.error;
+        // create <pre id="result">message</pre> and append it to the end of the form
+        const result = document.createElement("pre");
+        result.id = "result";
+        result.textContent = message;
+        // if there's a <pre id="result">message</pre> element, replace it with the new one, else append it
+        const existingResult = document.getElementById("result");
+        if (existingResult) {
+          existingResult.replaceWith(result);
+        } else {
+          form.appendChild(result);
+        }
       } catch (error) {
         result.textContent = "An error occurred";
         result.className = "text-red-500";
