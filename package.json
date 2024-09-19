@@ -1,14 +1,14 @@
 {
-  "name": "arcjet-node-express-example",
+  "name": "example-js-node",
   "description": "Arcjet Node.js and Express example app. Arcjet helps developers protect their apps in just a few lines of code.",
   "license": "Apache-2.0",
   "homepage": "https://arcjet.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arcjet/arcjet-node-express-example.git"
+    "url": "git+https://github.com/arcjet/example-js-node.git"
   },
   "bugs": {
-    "url": "https://github.com/arcjet/arcjet-node-express-example/issues",
+    "url": "https://github.com/arcjet/example-js-node/issues",
     "email": "support@arcjet.com"
   },
   "author": {
