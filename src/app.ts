@@ -2,11 +2,14 @@ import express from "express";
 import path from "path";
 import passport from "passport";
 import expressEjsLayouts from "express-ejs-layouts";
-import { sessionMiddleware, addAuthRoutes } from "./lib/auth";
+
 import signupProtectionRouter from "./routes/signup";
 import botProtectionRouter from "./routes/bots";
 import rateLimitingRouter from "./routes/rate-limiting";
 import attackProtectionRouter from "./routes/attack";
+import sensitiveInfoRouter from "./routes/sensitive-info";
+
+import { sessionMiddleware, addAuthRoutes } from "./lib/auth";
 
 const app = express();
 
@@ -40,29 +43,21 @@ app.use((req, res, next) => {
   next();
 });
 
-// Routes
+// Simple Routes
 app.get("/", (req, res) => {
-  res.render("index", {
-    title: "Arcjet example app",
-  });
+  res.render("index", { title: "Arcjet example app" });
 });
 
 app.get("/welcome", (req, res) => {
-  res.render("welcome", {
-    title: "Arcjet Signup Welcome Page",
-  });
+  res.render("welcome", { title: "Arcjet Signup Welcome Page" });
 });
 
+// Complex Routes
 app.use("/signup", signupProtectionRouter);
 app.use("/bots", botProtectionRouter);
 app.use("/rate-limiting", rateLimitingRouter);
 app.use("/attack", attackProtectionRouter);
-
-app.get("/sensitive-info", (req, res) => {
-  res.render("sensitive-info", {
-    title: "Sensitive Info",
-  });
-});
+app.use("/sensitive-info", sensitiveInfoRouter);
 
 // Add authentication routes
 addAuthRoutes(app);

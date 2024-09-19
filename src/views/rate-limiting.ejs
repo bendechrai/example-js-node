@@ -1,5 +1,5 @@
-<section class="Content container mx-auto px-4 py-8">
-  <div class="Section">
+<section class="content container mx-auto px-4 py-8">
+  <div class="section">
     <h1
       class="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl"
     >
@@ -16,9 +16,9 @@
     </p>
   </div>
 
-  <div class="Divider border-t border-border"></div>
+  <div class="divider border-t border-border"></div>
 
-  <div class="Section">
+  <div class="section">
     <h2 class="text-xl font-bold">Try it</h2>
     <form id="rlForm" class="space-y-8">
       <button
@@ -77,9 +77,9 @@
     <% } %>
   </div>
 
-  <div class="Divider border-t border-border"></div>
+  <div class="divider border-t border-border"></div>
 
-  <div class="Section">
+  <div class="section">
     <h2 class="text-xl font-bold">See the code</h2>
     <p class="text-secondary-foreground">
       The
@@ -104,7 +104,7 @@
     </p>
   </div>
 
-  <div class="Divider border-t border-border"></div>
+  <div class="divider border-t border-border"></div>
 
   <%- include('partials/what-next', { deployed: siteKey != null }) %>
 </section>
@@ -135,8 +135,6 @@
           form.appendChild(result);
         }
       } catch (error) {
-        result.textContent = "An error occurred";
-        result.className = "text-red-500";
       }
     });
   });

@@ -1,5 +1,5 @@
-<section class="Content container mx-auto px-4 py-8">
-  <div class="Section">
+<section class="content container mx-auto px-4 py-8">
+  <div class="section">
     <h1
       class="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl"
     >
@@ -30,16 +30,16 @@
       </li>
     </ul>
   </div>
-  <div class="Divider border-t border-border"></div>
+  <div class="divider border-t border-border"></div>
 
-  <div class="Section">
+  <div class="section">
     <h2 class="text-xl font-bold">Try it</h2>
     <div class="flex gap-4">
-      <form id="suForm" class="space-y-8">
-        <div class="space-y-2">
+      <form id="suForm" class="space-y-8 w-72">
+          <div class="space-y-2">
           <label
             class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            for=":r0:-form-item"
+            for="email"
             >Email</label
           ><input
             class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
@@ -47,11 +47,9 @@
             type="email"
             value="nonexistent@arcjet.ai"
             name="email"
+            autocomplete="email"
           />
-          <p
-            id=":r0:-form-item-description"
-            class="text-sm text-muted-foreground"
-          >
+          <p class="text-sm text-muted-foreground">
             Just a test form - you won't receive any emails.
           </p>
         </div>
@@ -69,26 +67,25 @@
     </p>
     <ul class="ms-8 list-outside list-disc">
       <li class="text-muted-foreground">
-        <code class="text-secondary-foreground"
-          >invalid.@arcjet<span class="copy-to-clipboard ml-4"></code>
+        <code class="text-secondary-foreground">invalid.@arcjet<span
+          class="copy-to-clipboard ml-4"></span></code>
         –&nbsp;is an invalid email address.
       </li>
       <li class="text-muted-foreground pt-2">
-        <code class="text-secondary-foreground"
-          >test@0zc7eznv3rsiswlohu.tk<span class="copy-to-clipboard ml-4"></code>
+        <code class="text-secondary-foreground">test@0zc7eznv3rsiswlohu.tk<span
+          class="copy-to-clipboard ml-4"></span></code>
         –&nbsp;is from a disposable email provider.
       </li>
       <li class="text-muted-foreground pt-2">
-        <code class="text-secondary-foreground"
-          >nonexistent@arcjet.ai<span class="copy-to-clipboard ml-4"></span
-        ></code>
+        <code class="text-secondary-foreground">nonexistent@arcjet.ai<span
+          class="copy-to-clipboard ml-4"></span></code>
         –&nbsp;is a valid email address &amp; domain, but has no MX records.
       </li>
     </ul>
   </div>
-  <div class="Divider border-t border-border"></div>
+  <div class="divider border-t border-border"></div>
 
-  <div class="Section">
+  <div class="section">
     <h2 class="text-xl font-bold">See the code</h2>
     <p class="text-secondary-foreground">
       The
@@ -113,7 +110,7 @@
     </p>
   </div>
 
-  <div class="Divider border-t border-border"></div>
+  <div class="divider border-t border-border"></div>
 
   <%- include('partials/what-next', { deployed: siteKey != null }) %>
 </section>
@@ -162,34 +159,9 @@
           formDiv.appendChild(result);
         }
       } catch (error) {
-        result.textContent = "An error occurred";
       }
     });
   });
-
-  // SVGs
-  const tickSvg =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1 inline-block"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-  const copySvg =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1 inline-block"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>';
-
-  // Find all .copy-to-clipboard elements and add a click event listener to each
-  const copyToClipboardElements =
-    document.querySelectorAll(".copy-to-clipboard");
-  copyToClipboardElements.forEach((element) => {
-    element.addEventListener("click", () => {
-      copyToClipboard(element);
-    });
-    element.innerHTML = copySvg;
-  });
-
-  // Function to copy text to clipboard
-  function copyToClipboard(element) {
-    const text = element.parentElement.textContent;
-    navigator.clipboard.writeText(text);
-    element.innerHTML = tickSvg;
-    setTimeout(() => {
-      element.innerHTML = copySvg;
-    }, 2000);
-  }
 </script>
+
+<%- include('scripts/copy-to-clipboard') %>

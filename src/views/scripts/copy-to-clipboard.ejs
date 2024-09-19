@@ -1,0 +1,27 @@
+<script>
+  // SVGs
+  const tickSvg =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1 inline-block"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+  const copySvg =
+    '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-1 inline-block"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>';
+
+  // Find all .copy-to-clipboard elements and add a click event listener to each
+  const copyToClipboardElements =
+    document.querySelectorAll(".copy-to-clipboard");
+  copyToClipboardElements.forEach((element) => {
+    element.addEventListener("click", () => {
+      copyToClipboard(element);
+    });
+    element.innerHTML = copySvg;
+  });
+
+  // Function to copy text to clipboard
+  function copyToClipboard(element) {
+    const text = element.parentElement.textContent;
+    navigator.clipboard.writeText(text);
+    element.innerHTML = tickSvg;
+    setTimeout(() => {
+      element.innerHTML = copySvg;
+    }, 2000);
+  }
+</script>
