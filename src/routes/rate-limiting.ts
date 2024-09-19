@@ -14,7 +14,7 @@ router.use((req, res, next) => {
 const aj = arcjet.withRule(
   shield({
     mode: "LIVE", // will block requests. Use "DRY_RUN" to log only
-  })
+  }),
 );
 
 // Returns ad-hoc rules depending on whether the user is authenticated
@@ -25,7 +25,7 @@ function getClient(user: Express.User | undefined) {
         mode: "LIVE",
         max: 5,
         window: "60s",
-      })
+      }),
     );
   } else {
     return aj.withRule(
@@ -33,7 +33,7 @@ function getClient(user: Express.User | undefined) {
         mode: "LIVE",
         max: 2,
         window: "60s",
-      })
+      }),
     );
   }
 }
@@ -110,7 +110,6 @@ router.get("/", async (req: Request, res: Response) => {
     title: "Arcjet rate limit example",
     description:
       "An example of Arcjet's rate limiting with different limits depending on authentication.",
-    currentUrl: req.originalUrl,
   });
 });
 

@@ -2,8 +2,9 @@ import express from "express";
 import path from "path";
 import passport from "passport";
 import expressEjsLayouts from "express-ejs-layouts";
-import rateLimitingRouter from "./routes/rate-limiting";
 import { sessionMiddleware, addAuthRoutes } from "./lib/auth";
+import botProtectionRouter from "./routes/bots";
+import rateLimitingRouter from "./routes/rate-limiting";
 
 const app = express();
 
@@ -29,10 +30,11 @@ app.use(sessionMiddleware);
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Pass user and siteKey to all views
+// Pass variables to all views
 app.use((req, res, next) => {
   res.locals.user = req.user;
   res.locals.siteKey = process.env.ARCJET_KEY ? true : undefined;
+  res.locals.currentUrl = req.originalUrl;
   next();
 });
 
@@ -40,37 +42,27 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
   res.render("index", {
     title: "Arcjet example app",
-    currentUrl: req.originalUrl,
   });
 });
 
 app.get("/signup", (req, res) => {
   res.render("signup", {
     title: "Signup form protection",
-    currentUrl: req.originalUrl,
   });
 });
 
-app.get("/bots", (req, res) => {
-  res.render("bots", {
-    title: "Bot protection",
-    currentUrl: req.originalUrl,
-  });
-});
-
+app.use("/bots", botProtectionRouter);
 app.use("/rate-limiting", rateLimitingRouter);
 
 app.get("/attack", (req, res) => {
   res.render("attack", {
     title: "Attack protection",
-    currentUrl: req.originalUrl,
   });
 });
 
 app.get("/sensitive-info", (req, res) => {
   res.render("sensitive-info", {
     title: "Sensitive Info",
-    currentUrl: req.originalUrl,
   });
 });
 
