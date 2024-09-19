@@ -29,7 +29,10 @@
     "dev:css": "tailwindcss -i src/public/styles/globals.css -o dist/public/styles/tailwind.css --watch",
     "dev:browser-sync": "browser-sync start --proxy 'localhost:3002' --port 3000 --files 'src/views/**/*.ejs, dist/public/styles/tailwind.css' --ignore 'node_modules' --reload-delay 1000 --no-inject-changes",
     "build": "tsc && npm run build:css",
-    "build:css": "tailwindcss -i src/public/styles/globals.css -o dist/public/styles/tailwind.css --minify"
+    "build:css": "tailwindcss -i src/public/styles/globals.css -o dist/public/styles/tailwind.css --minify",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix",
+    "format": "prettier --write \"src/**/*.ts\""
   },
   "dependencies": {
     "@arcjet/decorate": "^1.0.0-alpha.26",
@@ -54,10 +57,15 @@
     "@types/node": "^22.5.5",
     "@types/passport": "^1.0.16",
     "@types/passport-github2": "^1.2.9",
+    "@typescript-eslint/eslint-plugin": "^8.6.0",
+    "@typescript-eslint/parser": "^8.6.0",
     "browser-sync": "^3.0.2",
     "concurrently": "^9.0.1",
+    "eslint": "^9.10.0",
     "nodemon": "^3.1.5",
+    "prettier": "^3.3.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.6.0"
   }
 }

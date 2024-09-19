@@ -31,7 +31,9 @@ passport.use(
     function (
       accessToken: string,
       refreshToken: string,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       profile: any,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       done: (error: any, user?: Express.User) => void,
     ) {
       const user: Express.User = {
