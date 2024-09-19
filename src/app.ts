@@ -5,6 +5,7 @@ import expressEjsLayouts from "express-ejs-layouts";
 import { sessionMiddleware, addAuthRoutes } from "./lib/auth";
 import botProtectionRouter from "./routes/bots";
 import rateLimitingRouter from "./routes/rate-limiting";
+import attackProtectionRouter from "./routes/attack";
 
 const app = express();
 
@@ -53,12 +54,7 @@ app.get("/signup", (req, res) => {
 
 app.use("/bots", botProtectionRouter);
 app.use("/rate-limiting", rateLimitingRouter);
-
-app.get("/attack", (req, res) => {
-  res.render("attack", {
-    title: "Attack protection",
-  });
-});
+app.use("/attack", attackProtectionRouter);
 
 app.get("/sensitive-info", (req, res) => {
   res.render("sensitive-info", {
