@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <meta name="description" content="<%= description %>" />
+  </head>
+  <body>
+    <h1>Arcjet rate limiting example</h1>
+    <p>
+      This page is protected by
+      <a href="https://docs.arcjet.com/rate-limiting/concepts">
+        Arcjet's rate limiting </a
+      >.
+    </p>
+
+    <h2>Try it</h2>
+    <form id="rlForm">
+      <button type="submit">Push me</button>
+    </form>
+
+    <pre id="api_response"></pre>
+
+    <% if (user) { %>
+    <p className="text-green-500">
+      You are authenticated as <%= user.email %>
+      <span className="text-secondary-foreground">
+        – the limit is set to 5 requests every 60 seconds.</span
+      >
+    </p>
+    <% } else { %>
+    <p class="text-red-400">
+      You are not authenticated
+      <span class="text-secondary-foreground">
+        – the limit is set to 2 requests every 60 seconds.</span
+      >
+    </p>
+    <% } %>
+
+    <% if (siteKey) { %>
+      <p><a href="https://app.arcjet.com">Visit Dashboard</a></p>
+    <% } %>
+
+    <p>
+      Rate limits can be
+      <a href="https://docs.arcjet.com/reference/nodejs#ad-hoc-rules">
+        dynamically adjusted
+      </a>
+      e.g. to set a limit based on the authenticated user.
+    </p>
+
+    <% if (user) { %>
+      <form action="/auth/signout" method="post">
+        <button type="submit">Sign out</button>
+      </form>
+    <% } else { %>
+      <form action="/auth/login" method="post">
+        <button type="submit">Sign in with GitHub to see a different rate limit</button>
+      </form>
+      <% } %>
+      
+    <h2>See the code</h2>
+    <p>
+      The
+      <a
+        href="https://github.com/arcjet/arcjet-node-express-example/blob/main/src/routes/rate-limiting.ts"
+        target="_blank"
+        rel="noreferrer"
+      >
+        API route
+      </a>
+      imports a
+      <a
+        href="https://github.com/arcjet/arcjet-node-express-example/blob/main/src/lib/arcjet.ts"
+        target="_blank"
+        rel="noreferrer"
+      >
+        centralized Arcjet client
+      </a>
+      which sets base rules.
+    </p>
+
+    <script>
+      document
+        .getElementById("rlForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          try {
+            const response = await fetch("/rate-limiting/test", {
+              method: "POST",
+            });
+            const data = await response.json();
+
+            // if the page loads, we get
+            // {
+            //   "message": "HTTP 200: OK. 1 requests remaining. Reset in 59 seconds."
+            // }
+            // if the rate limit hits, we get
+            // {
+            //   "error": "HTTP 429: Too many requests. Reset in 22 seconds.",
+            //   "ip": {}
+            // }
+            // write the data.message or the date.error to api_response
+            document.getElementById("api_response").innerText =
+              data.message || data.error;
+          } catch (error) {
+            console.error("Error:", error);
+            document.getElementById("api_response").innerText = error.message;
+          }
+        });
+    </script>
+  </body>
+</html>
