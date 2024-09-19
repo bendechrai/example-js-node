@@ -1,13 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %></title>
-</head>
-<body>
-    <h1><%= title %></h1>
-    <p>This is a placeholder for the <%= title %> page.</p>
-    <a href="/">Back to Home</a>
-</body>
-</html>
+<section class="Content container mx-auto px-4 py-8">
+  <div class="Section">
+    <h1
+      class="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl"
+    >
+      Arcjet attack protection example
+    </h1>
+    <p class="max-w-[700px] text-lg">
+      This page is protected by
+      <a
+        class="hover:underline font-bold decoration-1 underline-offset-2"
+        href="https://docs.arcjet.com/shield/concepts"
+        >Arcjet Shield</a
+      >.
+    </p>
+    <p class="max-w-[700px] text-lg text-secondary-foreground">
+      Once a certain suspicion threshold is reached, subsequent requests from
+      that client are blocked for a period of time. Shield detects
+      <a
+        class="hover:underline font-bold decoration-1 underline-offset-2"
+        href="https://docs.arcjet.com/shield/concepts#which-attacks-will-arcjet-shield-block"
+        >suspicious behavior</a
+      >, such as SQL injection and cross-site scripting attacks.
+    </p>
+  </div>
+
+  <div class="Divider border-t border-border"></div>
+
+  <div class="Section">
+    <h2 class="text-xl font-bold">Try it</h2>
+    <p class="text-secondary-foreground">
+      Simulate an attack using <code>curl</code>:
+    </p>
+    <pre class="p-4">
+curl -v -H "x-arcjet-suspicious: true" https://example.arcjet.com/attack/test</pre
+    >
+    <p class="max-w-[700px] text-secondary-foreground">
+      After the 5th request, your IP will be blocked for 15 minutes. Suspicious
+      requests must meet a threshold before they are blocked to avoid false
+      positives.
+    </p>
+    <p class="max-w-[700px] text-secondary-foreground">
+      Shield can also be installed in middleware to protect your entire site.
+    </p>
+  </div>
+
+  <div class="Divider border-t border-border"></div>
+
+  <div class="Section">
+    <h2 class="text-xl font-bold">See the code</h2>
+    <p class="text-secondary-foreground">
+      The
+      <a
+        href="https://github.com/arcjet/example-js-node/blob/main/src/routes/attack.ts"
+        target="_blank"
+        rel="noreferrer"
+        class="font-bold hover:underline decoration-1 underline-offset-2"
+      >
+        API route
+      </a>
+      imports a
+      <a
+        href="https://github.com/arcjet/example-js-node/blob/main/src/lib/arcjet.ts"
+        target="_blank"
+        rel="noreferrer"
+        class="font-bold hover:underline decoration-1 underline-offset-2"
+      >
+        centralized Arcjet client
+      </a>
+      which sets base rules.
+    </p>
+  </div>
+
+  <div class="Divider border-t border-border"></div>
+
+  <%- include('partials/what-next', { deployed: siteKey != null }) %>
+</section>
