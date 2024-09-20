@@ -59,6 +59,6 @@ npm run dev
 
 - Auth: [Passport.js](https://www.passportjs.org/)
 - App: [Node.js](https://nodejs.org/) and [Expreess](https://expressjs.com/)
-- Development: [ts-node](https://typestrong.org/ts-node/) [Nodemon](https://nodemon.io/), [BrowserSync](https://browsersync.io/)
+- Development: [ts-node](https://typestrong.org/ts-node/), [Nodemon](https://nodemon.io/), and [BrowserSync](https://browsersync.io/)
 - Server-side validation: [Zod](https://zod.dev/)
 - Security: [Arcjet](https://arcjet.com/)
