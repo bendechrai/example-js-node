@@ -1,6 +1,5 @@
 import express, { Request, Response } from "express";
 import arcjet, { sensitiveInfo } from "../lib/arcjet";
-import { emailFormSchema } from "../lib/formSchema";
 import { ArcjetSensitiveInfoReason } from "@arcjet/node";
 
 const router = express.Router();
