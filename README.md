@@ -57,14 +57,8 @@ npm run dev
 
 ## Stack
 
-@TBC
-
-- Auth: [Auth.js](https://authjs.dev/)
-- App: [Next.js](https://nextjs.org/)
-- UI: [shadcn/ui](https://ui.shadcn.com/)
-- Form handling: [React Hook Form](https://react-hook-form.com/) (see also [our
-  full form protection
-  example](https://github.com/arcjet/arcjet-js/tree/main/examples/nextjs-14-react-hook-form))
-- Client-side validation: [Zod](https://zod.dev/)
+- Auth: [Passport.js](https://www.passportjs.org/)
+- App: [Node.js](https://nodejs.org/) and [Expreess](https://expressjs.com/)
+- Development: [ts-node](https://typestrong.org/ts-node/) [Nodemon](https://nodemon.io/), [BrowserSync](https://browsersync.io/)
+- Server-side validation: [Zod](https://zod.dev/)
 - Security: [Arcjet](https://arcjet.com/)
-- Platform: [Vercel](https://vercel.com/) (see [our integration](https://vercel.com/integrations/arcjet))
