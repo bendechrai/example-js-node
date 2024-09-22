@@ -7,7 +7,6 @@ import signupProtectionRouter from "./routes/signup";
 import botProtectionRouter from "./routes/bots";
 import rateLimitingRouter from "./routes/rate-limiting";
 import attackProtectionRouter from "./routes/attack";
-import sensitiveInfoRouter from "./routes/sensitive-info";
 
 import { auth, authSession } from "./lib/auth";
 
@@ -57,6 +56,5 @@ app.use("/signup", signupProtectionRouter);
 app.use("/bots", botProtectionRouter);
 app.use("/rate-limiting", rateLimitingRouter);
 app.use("/attack", attackProtectionRouter);
-app.use("/sensitive-info", sensitiveInfoRouter);
 
 export default app;
