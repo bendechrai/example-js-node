@@ -1,0 +1,139 @@
+<section class="content container mx-auto px-4 py-8">
+<div class="section">
+  <h1 class="text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl">Arcjet Sensitive Information</h1>
+  <p class="max-w-[700px] text-lg">This page is protected by <a class="hover:underline font-bold decoration-1 underline-offset-2" href="https://docs.arcjet.com/sensitive-info/concepts">Arcjet's
+    sensitive information detection</a> configured to detect:</p>
+  <ul class="ms-8 max-w-[700px] list-outside list-disc text-secondary-foreground">
+    <li class="text-lg">Email addresses</li>
+    <li class="text-lg pt-4">Credit/debit card numbers</li>
+    <li class="text-lg pt-4">IP addresses</li>
+    <li class="text-lg pt-4">Phone numbers</li>
+  </ul>
+</div>
+
+
+  <div class="divider border-t border-border"></div>
+
+  <div class="section">
+    <h2 class="text-xl font-bold">Try it</h2>
+    <div class="flex gap-4">
+      <form class="space-y-8" id="siForm">
+        <div class="space-y-2 w-72">
+          <label
+            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            for="payload">Payload to scan</label>
+            <textarea class="flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            placeholder="This message will be scanned for sensitive information when submitted"
+            name="payload"
+            id="payload"
+          >This message will be scanned for sensitive information when submitted</textarea>
+        </div>
+        <button
+          class="inline-flex items-center justify-center rounded-full text-md font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-9 py-1 px-5"
+          type="submit"
+        >Scan payload</button>
+      </form>
+    </div>
+    <h2 class="text-xl font-bold">Test payloads</h2>
+    <p class="text-secondary-foreground">Try these payloads to see how it works:</p>
+    <ul class="ms-8 list-outside list-disc">
+      <li class="text-muted-foreground">
+        <pre class="text-secondary-foreground">Please contact me at morgan@example.com<span
+          class="copy-to-clipboard ml-4"></span></pre>
+      </li>
+      <li class="text-muted-foreground pt-2">
+        <pre class="text-secondary-foreground">Can you charge the customer's card number 4242 4242 4242 4242 for $50?<span
+          class="copy-to-clipboard ml-4"></span></pre>
+      </li>
+      <li class="text-muted-foreground pt-2">
+        <pre class="text-secondary-foreground">I saw the issue when using Firefox on Windows 10, connected to Acme Fiber (IP address: 198.51.100.69).<span
+          class="copy-to-clipboard ml-4"></span></pre>
+      </li>
+      <li class="text-muted-foreground pt-2">
+        <pre class="text-secondary-foreground">Call me at (212) 664-7665<span
+          class="copy-to-clipboard ml-4"></span></pre>
+      </li>
+    </ul>
+  </div>
+
+  <div class="divider border-t border-border"></div>
+
+  <div class="section">
+    <h2 class="text-xl font-bold">See the code</h2>
+    <p class="text-secondary-foreground">
+      The
+      <a
+        href="https://github.com/arcjet/example-js-node/blob/main/src/routes/sensitive-info.ts"
+        target="_blank"
+        rel="noreferrer"
+        class="font-bold hover:underline decoration-1 underline-offset-2"
+      >
+        API route
+      </a>
+      imports a
+      <a
+        href="https://github.com/arcjet/example-js-node/blob/main/src/lib/arcjet.ts"
+        target="_blank"
+        rel="noreferrer"
+        class="font-bold hover:underline decoration-1 underline-offset-2"
+      >
+        centralized Arcjet client
+      </a>
+      which sets base rules.
+    </p>
+  </div>
+
+  <div class="divider border-t border-border"></div>
+
+  <%- include('partials/what-next', { deployed: siteKey != null }) %>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("siForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      try {
+        // Send a POST request to the /sensitive-info/test endpoint
+        const response = await fetch("/sensitive-info/test", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            payload: document.getElementById("payload").value,
+          }),
+        });
+        const data = await response.json();
+        
+        // Create a <p id="result">message</p> element
+        const result = document.createElement("p");
+        result.id = "result";
+        
+        if(data.ok) {
+          result.textContent = "Payload is safe";
+          result.className = "text-sm font-medium text-green-500";
+        } else {
+          result.textContent = data.message;
+          result.className = "text-sm font-medium text-destructive";
+        }
+
+        // If there's a <pre id="result">message</pre> element in the DOM already,
+        // replace it with the new one, else append it to the form
+        const existingResult = document.getElementById("result");
+        if (existingResult) {
+          existingResult.replaceWith(result);
+        } else {
+          // find first div in the form and append result to it
+          const formDiv = form.querySelector("div");
+          formDiv.appendChild(result);
+        }
+      } catch (error) {
+      }
+    });
+  });
+
+</script>
+
+<%- include('scripts/copy-to-clipboard') %>

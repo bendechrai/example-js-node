@@ -25,6 +25,8 @@ features.
 - [Attack protection](https://example.arcjet.com/attack) demonstrates Arcjet
   Shield, which detects suspicious behavior, such as SQL injection and
   cross-site scripting attacks.
+- [Sensitive Info](https://example.arcjet.com/sensitive-info) shows how your
+  application can be protected from ever receiving sensitive information.
 
 ## Run locally
 

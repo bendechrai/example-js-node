@@ -10,4 +10,10 @@ export const emailFormSchema = z.object({
   }),
 });
 
+export const sensitiveInfoFormSchema = z.object({
+  payload: z.string().min(1, {
+    message: "Please enter a payload.",
+  }),
+});
+
 export const emptyFormSchema = z.object({});
