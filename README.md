@@ -40,7 +40,6 @@ npm ci
    want to test the rate limiting authentication, you will also need to add
    `AUTH_SECRET`, `GITHUB_CLIENT_ID`, and `GITHUB_CLIENT_SECRET`.
 
-   > [!TIP]
    > Get your GitHub variables by [creating a GitHub OAuth
    > app](https://github.com/settings/developers) with a callback URL of
    > `http://localhost:3000/auth/callback/github`.
