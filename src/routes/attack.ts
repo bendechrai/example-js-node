@@ -39,11 +39,9 @@ router.get("/test", async (req: Request, res: Response) => {
 });
 
 router.get("/", (req: Request, res: Response) => {
-  const user = req.session.user;
   const siteKey = process.env.ARCJET_KEY ? true : undefined;
 
   res.render("attack", {
-    user,
     siteKey,
     title: "Arcjet attack protection example",
     description: "An example of Arcjet's attack protection.",

@@ -38,12 +38,10 @@ router.get("/test", async (req: Request, res: Response) => {
   res.json({ message: "Hello world" });
 });
 
-router.get("/", (req: Request, res: Response) => {
-  const user = req.session.user;
+router.get("/", async (req: Request, res: Response) => {
   const siteKey = process.env.ARCJET_KEY ? true : undefined;
 
   res.render("bots", {
-    user,
     siteKey,
     title: "Arcjet bot protection example",
     description: "An example of Arcjet's bot protection.",

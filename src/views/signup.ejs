@@ -115,12 +115,15 @@
   <%- include('partials/what-next', { deployed: siteKey != null }) %>
 </section>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zod/3.22.4/zod.umd.min.js"></script>
+
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("suForm");
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+
       try {
         // Send a POST request to the /signup/test endpoint
         const response = await fetch("/signup/test", {

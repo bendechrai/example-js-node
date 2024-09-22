@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
 import arcjet, { fixedWindow, shield } from "../lib/arcjet";
 import { setRateLimitHeaders } from "@arcjet/decorate";
+import { getSession } from "@auth/express";
+import { authConfig } from "src/lib/auth";
 
 const router = express.Router();
 
@@ -18,7 +20,7 @@ const aj = arcjet.withRule(
 );
 
 // Returns ad-hoc rules depending on whether the user is authenticated
-function getClient(user: Express.User | undefined) {
+function getClient(user: any) {
   if (user) {
     return aj.withRule(
       fixedWindow({
@@ -39,7 +41,8 @@ function getClient(user: Express.User | undefined) {
 }
 
 router.post("/test", async (req: Request, res: Response) => {
-  const user = req.session.user;
+  const session = await getSession(req, authConfig);
+  const user = session?.user;
 
   console.log("User: ", user);
 
@@ -100,12 +103,12 @@ router.post("/test", async (req: Request, res: Response) => {
   });
 });
 
-router.get("/", (req: Request, res: Response) => {
-  const user = req.session.user;
+router.get("/", async (req: Request, res: Response) => {
+  const session = await getSession(req, authConfig);
   const siteKey = process.env.ARCJET_KEY ? true : undefined;
 
   res.render("rate-limiting", {
-    user,
+    user: session?.user,
     siteKey,
     title: "Arcjet rate limit example",
     description:

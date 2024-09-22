@@ -114,14 +114,13 @@ router.post("/test", async (req: Request, res: Response) => {
 });
 
 router.get("/", (req: Request, res: Response) => {
-  const user = req.session.user;
   const siteKey = process.env.ARCJET_KEY ? true : undefined;
 
   res.render("signup", {
-    user,
     siteKey,
     title: "Arcjet signup form protection example",
     description: "An example of Arcjet's signup form protection.",
+    emailFormSchema: JSON.stringify(emailFormSchema.shape.email._def),
   });
 });
 

@@ -1,6 +1,6 @@
 import express from "express";
 import path from "path";
-import passport from "passport";
+import { fileURLToPath } from "url";
 import expressEjsLayouts from "express-ejs-layouts";
 
 import signupProtectionRouter from "./routes/signup";
@@ -9,7 +9,11 @@ import rateLimitingRouter from "./routes/rate-limiting";
 import attackProtectionRouter from "./routes/attack";
 import sensitiveInfoRouter from "./routes/sensitive-info";
 
-import { sessionMiddleware, addAuthRoutes } from "./lib/auth";
+import { auth, authSession } from "./lib/auth";
+
+// ESM-compatible __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -25,25 +29,22 @@ app.set("layout", "layout"); // This sets layout.ejs as the default layout
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from src/public (for other static assets)
+// Serve static files
 app.use(express.static(path.join(__dirname, "public")));
-
-// Serve static files from dist/public (for the generated tailwind.css)
 app.use(express.static(path.join(__dirname, "..", "dist", "public")));
 
-app.use(sessionMiddleware);
-app.use(passport.initialize());
-app.use(passport.session());
+// Auth.js setup
+app.use("/auth/*", auth);
+app.use(authSession);
 
 // Pass variables to all views
 app.use((req, res, next) => {
-  res.locals.user = req.user;
   res.locals.siteKey = process.env.ARCJET_KEY ? true : undefined;
   res.locals.currentUrl = req.originalUrl;
   next();
 });
 
-// Simple Routes
+// Routes
 app.get("/", (req, res) => {
   res.render("index", { title: "Arcjet example app" });
 });
@@ -52,14 +53,10 @@ app.get("/welcome", (req, res) => {
   res.render("welcome", { title: "Arcjet Signup Welcome Page" });
 });
 
-// Complex Routes
 app.use("/signup", signupProtectionRouter);
 app.use("/bots", botProtectionRouter);
 app.use("/rate-limiting", rateLimitingRouter);
 app.use("/attack", attackProtectionRouter);
 app.use("/sensitive-info", sensitiveInfoRouter);
-
-// Add authentication routes
-addAuthRoutes(app);
 
 export default app;
