@@ -39,26 +39,25 @@ npm ci
 ```
 
 3. Rename `.env.local.example` to `.env.local` and add your Arcjet key. If you
-   want to test the rate limiting authentication, you will also need to add a
-   `SESSION_SECRET` and [create a GitHub OAuth app](https://github.com/settings/developers).
+   want to test the rate limiting authentication, you will also need to add
+   `AUTH_SECRET`, `GITHUB_CLIENT_ID`, and `GITHUB_CLIENT_SECRET`.
 
-4. Install Node 22. This code-base uses `--experimental-require-module` to allow
-   intercompatibility between CommonJS and ESM. If you want an easy way to switch
-   between Node versions, [Node Version manager](https://github.com/nvm-sh/nvm)
-   is a great way to manage this.
+   > Get your GitHub variables by [creating a GitHub OAuth
+   > app](https://github.com/settings/developers) with a callback URL of
+   > `http://localhost:3000/auth/callback/github`.
 
-5. Start the dev server
+4. Start the dev server
 
 ```bash
 npm run dev
 ```
 
-6. Open [http://localhost:3000](http://localhost:3000) in your browser.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Stack
 
-- Auth: [Passport.js](https://www.passportjs.org/)
+- Auth: [Auth.js](https://authjs.dev/)
 - App: [Node.js](https://nodejs.org/) and [Expreess](https://expressjs.com/)
-- Development: [ts-node](https://typestrong.org/ts-node/), [Nodemon](https://nodemon.io/), and [BrowserSync](https://browsersync.io/)
+- Development: [TypeScript](https://www.typescriptlang.org/) and [tsx](https://github.com/esbuild-kit/tsx)
 - Server-side validation: [Zod](https://zod.dev/)
 - Security: [Arcjet](https://arcjet.com/)
